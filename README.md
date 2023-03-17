@@ -32,6 +32,8 @@
    
    + file will be created in the form of ```sender->receiver1.txt```
    
+   + file ```userData.txt``` in form of ```username password coins [__ self]```
+   
    + the server send challenge to another user in a form of ```@username guess amountGamble```
       
    + server also stores all the file relate to users in case the server shutdown. 
