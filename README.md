@@ -1,6 +1,7 @@
 ## GambleServer:
 
    + Listening on port 8989
+   + All the special character are the substring(0) of the server message, use that as a guidance to implement the server
    
 ## How the GUI should implement the server:
 
@@ -29,6 +30,8 @@
 ## Other:
 
    + server will create data for every chat and chat history, deleting user account will not delete their chat history
+   
+   + If there is an error, server will send ```&```
    
    + file will be created in the form of ```sender->receiver1.txt```
    
