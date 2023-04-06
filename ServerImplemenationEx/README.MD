@@ -1,3 +1,27 @@
+// main, place main in Login class
+
+```java
+
+    //main method to run the gui as thread
+    public static void main(String[] args) {
+        //thread
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    //	make object of Login class
+
+                    Login frame = new Login();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+```
+
+
 in the Log in frame.java
 
 ```java
@@ -161,7 +185,7 @@ ReceiverFromServer.java
 
 ```java
  */
-public class ReceiverFromUser {
+public class ReceiverFromServer {
 
     static String[] array;
 
@@ -291,7 +315,7 @@ in main frame .java
 // put this in the constructor 
 
         DefaultListModel<String> model = new DefaultListModel<>();
-        for (String s : (ReceiverFromUser.getAllUsers())) {
+        for (String s : (ReceiverFromServer.getAllUsers())) {
 
             model.addElement(s.replace("$", ""));
 
@@ -309,16 +333,16 @@ in main frame .java
             @Override
             public void actionPerformed(ActionEvent ae) {
                 model.removeAllElements();
-                for (String s : (ReceiverFromUser.getAllUsers())) {
-                    if (!ReceiverFromUser.removedList.contains(s))
+                for (String s : (ReceiverFromServer.getAllUsers())) {
+                    if (!ReceiverFromServer.removedList.contains(s))
                         model.addElement(s);
 
 
                 }
 
-                if (!ReceiverFromUser.errorLog.equals("")) {
+                if (!ReceiverFromServer.errorLog.equals("")) {
                     JOptionPane.showMessageDialog(
-                            null, ReceiverFromUser.errorLog +
+                            null, ReceiverFromServer.errorLog +
                                     "\nThe program will now exit", "Error", JOptionPane.ERROR_MESSAGE);
                     dispose();
                 }
@@ -356,11 +380,11 @@ in Chat Frame. java
 
 
 
-                //chatArea.append(time + " [" + ReceiverFromUser.myUsername + "]: " + messagetext.getText() + "\n");
-                chatArea.append(time + " [" + ReceiverFromUser.myUsername + "]: guessed"+ "\n");
+                //chatArea.append(time + " [" + ReceiverFromServer.myUsername + "]: " + messagetext.getText() + "\n");
+                chatArea.append(time + " [" + ReceiverFromServer.myUsername + "]: guessed"+ "\n");
                 OutputStream output;
                 try {
-                    output = ReceiverFromUser.socket.getOutputStream();
+                    output = ReceiverFromServer.socket.getOutputStream();
                     PrintWriter writer = new PrintWriter(output, true);
                     writer.println(sendDm.trim() + " " + messagetext.getText());
                 } catch (IOException e1) {
@@ -374,7 +398,7 @@ in Chat Frame. java
     public void forceChange() {
         OutputStream output;
         try {
-            output = ReceiverFromUser.socket.getOutputStream();
+            output = ReceiverFromServer.socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
             writer.println("**" + sendDm.trim() + "_" + chatArea.getText().replaceAll("[\\\t|\\\n|\\\r]",
