@@ -197,7 +197,7 @@ public class ReceiverFromServer {
     static String errorLog = "";
 
     static public void assingSocket(Socket socket) {
-        ReceiverFromUser.socket = socket;
+        ReceiverFromServer.socket = socket;
     }
 
 
@@ -287,7 +287,7 @@ public class ListenServer extends Thread {
                     ReceiverFromServer.in = (false);
                 } else if (td.equals("$")) {
                     //Login.in =(true);
-                    ReceiverFromUser.in = (true);
+                    ReceiverFromServer.in = (true);
 
                     System.out.println("Correct password");
                     ReceiverFromServer.importUserfromServer(response.substring(response.indexOf("#") + 1));
