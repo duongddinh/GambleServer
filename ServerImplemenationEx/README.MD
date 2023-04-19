@@ -411,7 +411,7 @@ in Chat Frame. java
         }
 
     }
-    // get the user's coins:
+    // get the user's coins, can be put in a thread to constantly get the coins or have a button to get the coins
         OutputStream output2;
         try {
             output2 = ReceiverFromUser.socket.getOutputStream();
@@ -458,17 +458,17 @@ in Chat Frame. java
             if (e.getSource() == editusername) {
                 OutputStream output;
                 try {
-                    output = ReceiverFromUser.socket.getOutputStream();
+                    output = ReceiverFromServer.socket.getOutputStream();
                     PrintWriter writer = new PrintWriter(output, true);
                     writer.println("!#" + usernametext.getText());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                String olduser = ReceiverFromUser.myUsername;
-                ReceiverFromUser.myUsername = usernametext.getText();
-                for (int i = 0; i < ReceiverFromUser.array.length; i++) {
-                    if (olduser.equals(ReceiverFromUser.array[i])) {
-                        ReceiverFromUser.array[i] = ReceiverFromUser.myUsername;
+                String olduser = ReceiverFromServer.myUsername;
+                ReceiverFromServer.myUsername = usernametext.getText();
+                for (int i = 0; i < ReceiverFromServer.array.length; i++) {
+                    if (olduser.equals(ReceiverFromServer.array[i])) {
+                        ReceiverFromServer.array[i] = ReceiverFromServer.myUsername;
                     }
                 }
             }
@@ -477,7 +477,7 @@ in Chat Frame. java
             if (e.getSource() == deleteAccount) {
                 OutputStream output;
                 try {
-                    output = ReceiverFromUser.socket.getOutputStream();
+                    output = ReceiverFromServer.socket.getOutputStream();
                     PrintWriter writer = new PrintWriter(output, true);
                     writer.println("!!");
                 } catch (IOException e1) {
@@ -486,7 +486,7 @@ in Chat Frame. java
 
                 Login obj = new Login();
 
-                ReceiverFromUser.in = false;
+                ReceiverFromServer.in = false;
                 obj.setVisible(true);
 
                 //close currrent GUi
@@ -495,17 +495,17 @@ in Chat Frame. java
 
             //listener for the edit button for changing the password
             if (e.getSource() == password) {
-                if (optext.getText().equals(ReceiverFromUser.mypassword)) {
+                if (optext.getText().equals(ReceiverFromServer.mypassword)) {
                     OutputStream output;
                     try {
-                        output = ReceiverFromUser.socket.getOutputStream();
+                        output = ReceiverFromServer.socket.getOutputStream();
                         PrintWriter writer = new PrintWriter(output, true);
                         writer.println("$#" + nptext.getText());
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
 
-                    ReceiverFromUser.mypassword = nptext.getText();
+                    ReceiverFromServer.mypassword = nptext.getText();
                 } else {
                     JOptionPane.showMessageDialog(
                             null, "Wrong password", "Error", JOptionPane.ERROR_MESSAGE);
