@@ -269,8 +269,8 @@ public class GambleServer {
                         if (user.ifGuessed()) {
                             double user1 = user.getNumberGuessed();
                             if ( Math.abs(d-thenumber) <  Math.abs(user1-thenumber)) {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value, you won "+ getbet[1]+" coins!!");
-                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1]+ " coins!!");
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you won "+ getbet[1]+" coins!!");
+                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1]+ " coins!!, the number is "+ thenumber);
                                 excludeUser.lossCoins(Integer.valueOf(getbet[1]));
                                 user.addCoins((Integer.valueOf(getbet[1])));
                                 for (int i = 0; i < userData.size(); i++) {
@@ -284,8 +284,8 @@ public class GambleServer {
                                 System.out.println(excludeUser.getCoins());
 
                             } else {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value, you lose "+ getbet[1]+ " coins!!");
-                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1] +" coins!");
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you lose "+ getbet[1]+ " coins!!");
+                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1] +" coins!, the number is " +thenumber);
                                 for (int i = 0; i < userData.size(); i++) {
                                     if (excludeUser.getUsername().equals(userData.get(i).getUsername())) {
                                         userData.get(i).addCoins(Integer.valueOf(getbet[1]));
@@ -336,7 +336,7 @@ public class GambleServer {
         sender = sender.replace("]", "");
        // File readfrom1 = new File(sender + "->" + receiver + ".txt");
         //File readfrom2 = new File(receiver + "->" + sender + ".txt");
-        File forcechange = new File(sender + "->" + receiver + "1.txt");
+        File forcechange = new File(sender + "-" + receiver + ".txt");
 
         try {
             if (forcechange.exists()) {
@@ -368,10 +368,10 @@ public class GambleServer {
         String[] arr = receiver.split("_");
         //System.out.println(sender + " "+ receiver);
 
-            File ff = new File(sender + "->" + arr[0].replace("@", "").trim() + "1.txt");
+            File ff = new File(sender + "-" + arr[0].replace("@", "").trim() + ".txt");
             ff.delete();
 
-            try (FileWriter fw = new FileWriter(sender + "->" + arr[0].replace("@", "").trim() + "1.txt", true);
+            try (FileWriter fw = new FileWriter(sender + "-" + arr[0].replace("@", "").trim() + ".txt", true);
                  BufferedWriter bw = new BufferedWriter(fw);
                  PrintWriter out = new PrintWriter(bw)) {
                 String[] no = arr[1].split("\\\\n");
@@ -414,6 +414,18 @@ public class GambleServer {
     }
 
 
+    void getTotalCoins(UserThread userd) {
+
+
+        for (UserThread user : userThreads) {
+            if (user == userd) {
+                for (int i = 0; i < userData.size(); i++) {
+                    if (userd.getUsername().equals(userData.get(i).getUsername()))
+                        user.sendMessage("*" + userData.get(i).getCoins());
+                }
+            }
+        }
+    }
     // get user name
     Set<String> getUserNames() {
         return this.userNames;
@@ -439,7 +451,7 @@ public class GambleServer {
     String getRandomNumberRadioDec(UserThread user) {
         RadioActiveDecay rd = new RadioActiveDecay();
         try {
-            String c = rd.getDataFromServer("5", "APIKEY");
+            String c = rd.getDataFromServer("5", "RB1k1Q0fjmvsKC68x7kNw1ozHXf");
             String d = rd.parseJSON(c);
             int[] truerandom = getIN(d);
             int average = 0;
