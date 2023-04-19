@@ -444,3 +444,75 @@ in Chat Frame. java
             sendDm = "@" + sendDm.trim();
         }
 ```
+
+//account management option
+
+```java 
+
+    ActionListener actionListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            //listener for the edit button for changing the username
+            if (e.getSource() == editusername) {
+                OutputStream output;
+                try {
+                    output = ReceiverFromUser.socket.getOutputStream();
+                    PrintWriter writer = new PrintWriter(output, true);
+                    writer.println("!#" + usernametext.getText());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                String olduser = ReceiverFromUser.myUsername;
+                ReceiverFromUser.myUsername = usernametext.getText();
+                for (int i = 0; i < ReceiverFromUser.array.length; i++) {
+                    if (olduser.equals(ReceiverFromUser.array[i])) {
+                        ReceiverFromUser.array[i] = ReceiverFromUser.myUsername;
+                    }
+                }
+            }
+
+            //listener for the delete account button
+            if (e.getSource() == deleteAccount) {
+                OutputStream output;
+                try {
+                    output = ReceiverFromUser.socket.getOutputStream();
+                    PrintWriter writer = new PrintWriter(output, true);
+                    writer.println("!!");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                Login obj = new Login();
+
+                ReceiverFromUser.in = false;
+                obj.setVisible(true);
+
+                //close currrent GUi
+                dispose();
+            }
+
+            //listener for the edit button for changing the password
+            if (e.getSource() == password) {
+                if (optext.getText().equals(ReceiverFromUser.mypassword)) {
+                    OutputStream output;
+                    try {
+                        output = ReceiverFromUser.socket.getOutputStream();
+                        PrintWriter writer = new PrintWriter(output, true);
+                        writer.println("$#" + nptext.getText());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                    ReceiverFromUser.mypassword = nptext.getText();
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null, "Wrong password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        }
+    };
+    
+```
