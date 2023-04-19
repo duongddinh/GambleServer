@@ -195,7 +195,7 @@ public class ReceiverFromServer {
     static String mypassword = "";
     static ArrayList<String> removedList = new ArrayList<>();
     static String errorLog = "";
-
+    static String coins = "500";
     static public void assingSocket(Socket socket) {
         ReceiverFromServer.socket = socket;
     }
@@ -298,6 +298,9 @@ public class ListenServer extends Thread {
                 } else if (td.equals("&")) {
                 	System.out.println(response.substring(1));
                 	ReceiverFromServer.errorLog = response.substring(1);
+                } else if (td.equals("*")) {
+                    System.out.println(response.substring(1));
+                    ReceiverFromServer.coins = response.substring(1);
                 }
             } catch (IOException ex) {
                 //ex.printStackTrace();
@@ -408,6 +411,16 @@ in Chat Frame. java
         }
 
     }
+    // get the user's coins:
+        OutputStream output2;
+        try {
+            output2 = ReceiverFromUser.socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output2, true);
+            writer.println("_*");
+            System.out.println("_*");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     
 // Put this in the constructor
  public Chat(String talktoUser) {
