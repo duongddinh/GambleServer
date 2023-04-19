@@ -184,6 +184,8 @@ public class UserThread extends Thread {
                     }
                     else if (clientMessage.substring(0, 2).equals("_!")) {
                         server.getRandomNumberRadioDec(this);
+                    }   else if (clientMessage.substring(0, 2).equals("_*")) {
+                        server.getTotalCoins(this);
                     }
                     else {
                         // if client does not request anything, just send nad broadcast message
