@@ -35,7 +35,7 @@
    
    + If there is an error, server will send ```&```
    
-   + server sends "*" for the coins 
+   + server sends ```*``` for the coins 
    
    + file will be created in the form of ```sender-receiver.txt```
    
