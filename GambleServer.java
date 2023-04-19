@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GambleServer {
 
+    boolean bothguessed = true;
     private static Set<String> userNames = new HashSet<>();
     private static ArrayList<Users> userData = new ArrayList<>();
     private int port;
@@ -266,11 +267,11 @@ public class GambleServer {
 
                         double d = Double.valueOf(getbet[0]);
 
-                        if (user.ifGuessed()) {
+                        if (user.ifGuessed() && !bothguessed) {
                             double user1 = user.getNumberGuessed();
                             if ( Math.abs(d-thenumber) <  Math.abs(user1-thenumber)) {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you lose "+ getbet[1]+" coins!!");
-                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1]+ " coins!!, the number is "+ thenumber);
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), your guess is "+user1+", you lose "+ getbet[1]+" coins!!");
+                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1]+ " coins!!, the number is "+ thenumber +", your guess is "+ d);
                                 excludeUser.addCoins(Integer.valueOf(getbet[1]));
                                 user.lossCoins((Integer.valueOf(getbet[1])));
                                 for (int i = 0; i < userData.size(); i++) {
@@ -282,15 +283,15 @@ public class GambleServer {
                                     }
                                 }
                                 System.out.println(excludeUser.getCoins());
-
+                                bothguessed = true;
                             } else if (( Math.abs(d-thenumber) == Math.abs(user1-thenumber))) {
                                 user.sendMessage(time +"[Server] You guys guessed the same number! guess again!");
                                 excludeUser.sendMessage(time +"[Server] You guys guessed the same number! guess again!");
                             }
 
                             else {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you win "+ getbet[1]+ " coins!!");
-                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1] +" coins!, the number is " +thenumber);
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), your guess is"+ user1+ ", you win "+ getbet[1]+ " coins!!");
+                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1] +" coins!, the number is " +thenumber+ " your guess is "+ d);
                                 for (int i = 0; i < userData.size(); i++) {
                                     if (excludeUser.getUsername().equals(userData.get(i).getUsername())) {
                                         userData.get(i).lossCoins(Integer.valueOf(getbet[1]));
@@ -303,15 +304,18 @@ public class GambleServer {
                                 user.addCoins((Integer.valueOf(getbet[1])));
 
                                 System.out.println(excludeUser.getCoins());
-
+                                bothguessed = true;
                             }
                             user.setGuessed(false);
 
-                        } else {
+                        } else  if (!bothguessed){
                             excludeUser.setNumberGuessed(d);
                             excludeUser.setGuessed(true);
                             System.out.println(c);
                             user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d - thenumber)) + " of the actual value and bet " + getbet[1] + " coins!");
+                        } else {
+                            excludeUser.sendMessage(time + "[Server]: regenerate the number to play again!");
+
                         }
                         // write data dm to file
                         //writeToFile(whosent, user.getUsername(), time + " " + whosent + ": " + c);
@@ -474,6 +478,7 @@ public class GambleServer {
     }
 
     String getRandomNumberRD(UserThread user) {
+        bothguessed = !bothguessed;
         orgGet getRandomNUm = new orgGet("dinhd@purdue.edu");
         try {
             String c =getRandomNUm.getRandomNumber(5, 0, 20, 10);
