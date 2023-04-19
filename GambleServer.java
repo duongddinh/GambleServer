@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-public class ChatServer {
+public class GambleServer {
 
     boolean bothguessed = true;
     private static Set<String> userNames = new HashSet<>();
@@ -18,7 +18,7 @@ public class ChatServer {
     static double thenumber=0;
     TimeConnect timec = new TimeConnect();
     //start a port
-    public ChatServer(int port) {
+    public GambleServer(int port) {
         this.port = port;
     }
 
@@ -68,7 +68,7 @@ public class ChatServer {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(helloRunnable, 0, 100, TimeUnit.SECONDS);
         int port = 8989;
-        ChatServer server = new ChatServer(port);
+        GambleServer server = new GambleServer(port);
         server.execute();
 
 
