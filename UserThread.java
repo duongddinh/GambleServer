@@ -86,7 +86,7 @@ public class UserThread extends Thread {
 
             password =splited[2];
 
-            System.out.println("Duuplicates");
+            System.out.println("Duplicates");
             server.wrongPass("Duplicate username", this);
         }
         // if user decides ro sign in
@@ -206,6 +206,10 @@ public class UserThread extends Thread {
             ex.printStackTrace();
 
         }
+    }
+
+    public void setCoins(int amount) {
+        coins = amount;
     }
     public void addCoins(int amount){
         coins = coins + amount;

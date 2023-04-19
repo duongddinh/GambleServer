@@ -6,7 +6,7 @@ public class Users {
     ArrayList<String> hiddenUsers = new ArrayList<>();
     private String username;
     private String psswd;
-    int coins = 500;
+    int coins;
     // constructor
     public Users(String username, String psswd, int coins) {
         this.username = username;
