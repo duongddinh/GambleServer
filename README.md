@@ -26,6 +26,8 @@
    + Get number from atmospheric noise  ```__```
    
    + Get number from radioactive decay  ```_!```
+   
+   + Get coins ```_*```
       
 ## Other:
 
