@@ -269,33 +269,38 @@ public class GambleServer {
                         if (user.ifGuessed()) {
                             double user1 = user.getNumberGuessed();
                             if ( Math.abs(d-thenumber) <  Math.abs(user1-thenumber)) {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you won "+ getbet[1]+" coins!!");
-                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1]+ " coins!!, the number is "+ thenumber);
-                                excludeUser.lossCoins(Integer.valueOf(getbet[1]));
-                                user.addCoins((Integer.valueOf(getbet[1])));
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " + Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you lose "+ getbet[1]+" coins!!");
+                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1]+ " coins!!, the number is "+ thenumber);
+                                excludeUser.addCoins(Integer.valueOf(getbet[1]));
+                                user.lossCoins((Integer.valueOf(getbet[1])));
                                 for (int i = 0; i < userData.size(); i++) {
                                     if (excludeUser.getUsername().equals(userData.get(i).getUsername())) {
-                                        userData.get(i).lossCoins(Integer.valueOf(getbet[1]));
+                                        userData.get(i).addCoins(Integer.valueOf(getbet[1]));
                                     }
                                     if (user.getUsername().equals(userData.get(i).getUsername())) {
-                                        userData.get(i).addCoins(Integer.valueOf(getbet[1]));
+                                        userData.get(i).lossCoins(Integer.valueOf(getbet[1]));
                                     }
                                 }
                                 System.out.println(excludeUser.getCoins());
 
-                            } else {
-                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you lose "+ getbet[1]+ " coins!!");
-                                excludeUser.sendMessage(time + " [Server] You win " + getbet[1] +" coins!, the number is " +thenumber);
+                            } else if (( Math.abs(d-thenumber) == Math.abs(user1-thenumber))) {
+                                user.sendMessage(time +"[Server] You guys guessed the same number! guess again!");
+                                excludeUser.sendMessage(time +"[Server] You guys guessed the same number! guess again!");
+                            }
+
+                            else {
+                                user.sendMessage(time + " " + whosent + ": guessed ~ " +Math.round(Math.abs(d-thenumber)) + " of the actual value (" +thenumber +"), you win "+ getbet[1]+ " coins!!");
+                                excludeUser.sendMessage(time + " [Server] You lose " + getbet[1] +" coins!, the number is " +thenumber);
                                 for (int i = 0; i < userData.size(); i++) {
                                     if (excludeUser.getUsername().equals(userData.get(i).getUsername())) {
-                                        userData.get(i).addCoins(Integer.valueOf(getbet[1]));
-                                    }
-                                    if (user.getUsername().equals(userData.get(i).getUsername())) {
                                         userData.get(i).lossCoins(Integer.valueOf(getbet[1]));
                                     }
+                                    if (user.getUsername().equals(userData.get(i).getUsername())) {
+                                        userData.get(i).addCoins(Integer.valueOf(getbet[1]));
+                                    }
                                 }
-                                excludeUser.addCoins((Integer.valueOf(getbet[1])));
-                                user.lossCoins((Integer.valueOf(getbet[1])));
+                                excludeUser.lossCoins((Integer.valueOf(getbet[1])));
+                                user.addCoins((Integer.valueOf(getbet[1])));
 
                                 System.out.println(excludeUser.getCoins());
 
