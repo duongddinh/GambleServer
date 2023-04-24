@@ -13,11 +13,11 @@ public class UserThread extends Thread {
     int coins = 500;
     double numberGuessed = 0.0;
     private Socket socket;
-    private ChatServer server;
+    private GambleServer server;
     private PrintWriter writer;
     boolean guessed = false;
     // constructor
-    public UserThread(Socket socket, ChatServer server) {
+    public UserThread(Socket socket, GambleServer server) {
         this.socket = socket;
         this.server = server;
     }
