@@ -484,6 +484,7 @@ public class GambleServer {
 
 
     String getRandomNumberRadioDec(UserThread user) {
+	bothguessed = !bothguessed;
         RadioActiveDecay rd = new RadioActiveDecay();
         try {
             String c = rd.getDataFromServer("5", "RB1k1Q0fjmvsKC68x7kNw1ozHXf");
