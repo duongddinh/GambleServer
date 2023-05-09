@@ -75,7 +75,7 @@ public class UserThread extends Thread {
         return hexString.toString();
     }
 
-    //sing up
+    //sign up
     public void signup(BufferedReader reader) throws Exception {
         System.out.println("sign up");
         while (server.checkUserNameDuplication(userName) && up.equals("up")) {
